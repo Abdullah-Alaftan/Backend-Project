@@ -40,12 +40,12 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories
             var findProduct = _products.Find(productId);
             return findProduct;
         }
-        public Product UpdateOne(Product UpdateProduct)
+        public Product UpdateOne(Product updateProduct)
         {
-            _databaseContext.Products.Update(UpdateProduct);
+            _databaseContext.Products.Update(updateProduct);
             _databaseContext.SaveChanges();
 
-            return UpdateProduct;
+            return updateProduct;
         }
     }
 }

@@ -21,11 +21,11 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories
 
         }
 
-        public OrderItem CreateOne(OrderItem NewOrderItem)
+        public OrderItem CreateOne(OrderItem newOrderItem)
         {
-            _orderItems.Add(NewOrderItem);
+            _orderItems.Add(newOrderItem);
             _databaseContext.SaveChanges();
-            return NewOrderItem;
+            return newOrderItem;
         }
 
         public OrderItem? DeleteOne(Guid orderItemId)

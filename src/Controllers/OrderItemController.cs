@@ -27,9 +27,9 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpPost]
-        public OrderItem? CreateOne([FromBody] OrderItemCreateDto NewOrderItem)
+        public OrderItem? CreateOne([FromBody] OrderItemCreateDto newOrderItem)
         {
-            return _orderItemService.CreateOne(NewOrderItem);
+            return _orderItemService.CreateOne(newOrderItem);
         }
 
         [HttpDelete("{orderItemId}")]
