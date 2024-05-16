@@ -146,6 +146,11 @@ namespace Backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
+                    b.Property<string>("Img")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("img");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")

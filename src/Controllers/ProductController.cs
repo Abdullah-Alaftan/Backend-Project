@@ -12,12 +12,12 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         {
             _productService = productService;
         }
+
         [HttpGet] //Action methods GET
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<ProductReadDto>> FindAll([FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset)
+       public ActionResult<IEnumerable<ProductReadDto>> FindAll(  [FromQuery(Name = "search")] string? searchKeyword)
         {
-
-            return Ok(_productService.FindAll(limit, offset));
+            return Ok(_productService.FindAll(searchKeyword));
         }
 
         [HttpGet("{productId}")] //Action methods GET with Route attributes
@@ -30,21 +30,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
             return Ok(foundProduct);
 
         }
-        [HttpGet("search")] //Action method for searching products by keyword
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<ProductReadDto>> Search(string keyword)
-        {
-            List<ProductReadDto> foundProducts = _productService.Search(keyword);
-            if (foundProducts.Count == 0)
-                return NotFound();
-
-            return Ok(foundProducts);
-        }
-
-
-
-
+       
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)] // documentation error status code

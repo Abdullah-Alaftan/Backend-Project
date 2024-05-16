@@ -35,38 +35,16 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Services
                 return false;
             }
         }
-        public IEnumerable<ProductReadDto> FindAll(int limit, int offset)
+       public IEnumerable<ProductReadDto> FindAll(string? searchKeyword)
         {
-            IEnumerable<Product> products = _productRepository.FindAll(limit, offset);
+            IEnumerable<Product> products = _productRepository.FindAll(searchKeyword);
             return products.Select(_mapper.Map<ProductReadDto>);
-
         }
         public ProductReadDto FindOne(Guid productId)
         {
             Product? products = _productRepository.FindOne(productId);
             return _mapper.Map<ProductReadDto>(products);
         }
-
-        public List<ProductReadDto> Search(string keyword)
-        {
-            // Assuming _context is your DbContext and Products is your DbSet<Product>
-            var foundProducts = _productRepository.Search(keyword)
-            .Where(p => p.Name.Contains(keyword))
-            .Select(p => new ProductReadDto
-            {
-                // Map your Product entity to ProductReadDto
-                Id = p.Id,
-                CategoryId = p.CategoryId,
-                Name = p.Name,
-                Price = p.Price
-                // Map other properties as needed
-            })
-            .ToList();
-            return foundProducts;
-        }
-
-
-
         public ProductReadDto UpdateOne(Guid productId, ProductUpdateDto updatedProduct)
         {
             var product = _productRepository.FindOne(productId);

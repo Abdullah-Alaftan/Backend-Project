@@ -5,6 +5,8 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.DTOs
         public Guid CategoryId { get; set; }
         public string? Name { get; set; }
         public int Price { get; set; }
+        public string Img { get; set; }
+
 
     }
 
@@ -13,6 +15,8 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.DTOs
         public Guid Id { get; set; }
         public Guid CategoryId { get; set; }
         public string? Name { get; set; }
+        public string Img { get; set; }
+
         public int Price { get; set; }
     }
     public class ProductUpdateDto
