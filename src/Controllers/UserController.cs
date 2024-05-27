@@ -14,7 +14,7 @@ public class UserController : CustomBaseController
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public ActionResult<IEnumerable<UserReadDto>> FindAll([FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset)
     {
         return Ok(_userService.FindAll(limit, offset));
@@ -25,7 +25,7 @@ public class UserController : CustomBaseController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public ActionResult<UserReadDto?> FindOne(Guid userId)
     {
-        IEnumerable<UserReadDto>? users = _userService.FindAll(0,0);
+        IEnumerable<UserReadDto>? users = _userService.FindAll(0, 0);
         UserReadDto? user = users.FirstOrDefault(u => u.Id == userId);
         if (user == null) return NoContent();
         return Ok(_userService.FindOne(userId));
@@ -47,9 +47,9 @@ public class UserController : CustomBaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<string?> Login([FromBody] UserLogInDto user)
     {
-        if(user == null) return BadRequest();
+        if (user == null) return BadRequest();
         string? token = _userService.Login(user);
-        if(token == null) return BadRequest();
+        if (token == null) return BadRequest();
         return Ok(token);
     }
 

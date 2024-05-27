@@ -21,13 +21,12 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         }
         [HttpGet("{inventoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<InventoryReadDto?> FindOne(Guid inventoryId)
         {
-            IEnumerable<InventoryReadDto> inventories = _inventoryService.FindAll();
-            InventoryReadDto? isFound = inventories.FirstOrDefault(inventory => inventory.Id == inventoryId);
-            if (isFound == null) return NoContent();
             InventoryReadDto? inventory = _inventoryService.FindOne(inventoryId);
+            if (inventory == null) return NotFound();
+
             return Ok(inventory);
         }
 
@@ -60,7 +59,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         public ActionResult<InventoryReadDto?> UpdateOne(Guid inventoryId, [FromBody] InventoryUpdateDto updateInventory)
         {
             InventoryReadDto? findInventory = _inventoryService.FindOne(inventoryId);
-            if(findInventory == null) return NotFound();
+            if (findInventory == null) return NotFound();
             return Accepted(_inventoryService.UpdateOne(inventoryId, updateInventory));
         }
     }

@@ -36,32 +36,44 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Services
         public Order CreateOne(List<CheckoutDto> checkoutOrder, string userId)
         {
             Console.WriteLine($"USER ID = {userId}");
-            Order order = new();
-            order.UserId = new Guid(userId);
+            Order order = new()
+            {
+                UserId = new Guid(userId)
+            };
             _orderRepository.CreateOne(order);
 
             foreach (var checkedItem in checkoutOrder)
             {
-                var product = _productService.FindOne(checkedItem.ProductId);
-                var inventory = _inventoryService.FindAll().FirstOrDefault(inv => inv.ProductId == checkedItem.ProductId && inv.Color == checkedItem.Color && inv.Size == checkedItem.Size);
-                if (inventory is null) continue;
-                if (checkedItem.Quantity >= inventory.Quantity) continue;
+                // Console.WriteLine($"Running for loop checkoutOrder ");
+
+                // var product = _productService.FindOne(checkedItem.ProductId);
+                // Console.WriteLine($"product item is found");
+
+                // var inventory = _inventoryService.FindAll().FirstOrDefault(inv => inv.ProductId == checkedItem.ProductId && inv.Color == checkedItem.Color && inv.Size == checkedItem.Size);
+                // if (inventory is null) throw new Exception("inventory is null");
+                // if (checkedItem.Quantity >= inventory.Quantity) throw new Exception("exceeds inventory!");
+                // Console.WriteLine($"Create a new order item object");
+
                 OrderItemCreateDto orderItem = new()
-                    {
-                        OrderId = order.Id,
-                        InventoryId = inventory.Id,
-                        Quantity = checkedItem.Quantity,
-                        TotalPrice = checkedItem.Quantity * product.Price
-                    };
-                    _orderItemService.CreateOne(orderItem);
+                {
+                    OrderId = order.Id,
+                    // InventoryId = inventory.Id,
+                    Quantity = checkedItem.Quantity,
+                    // TotalPrice = checkedItem.Quantity * product.Price
+                };
+
+                _orderItemService.CreateOne(orderItem);
+                Console.WriteLine($"save order item object in database");
+
             }
+            //    _orderRepository.UpdateOne(order);
             return order;
         }
 
         public Order? DeleteOne(Guid OrderId)
         {
             var deleteOrder = _orderRepository.FindOne(OrderId);
-            if(deleteOrder == null) return null;
+            if (deleteOrder == null) return null;
             return _orderRepository.DeleteOne(OrderId);
         }
     }

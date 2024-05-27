@@ -31,9 +31,9 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories
         public OrderItem? DeleteOne(Guid orderItemId)
         {
             var deleteItem = FindOne(orderItemId);
-                _orderItems.Remove(deleteItem!);
-                _databaseContext.SaveChanges();
-                return deleteItem;
+            _orderItems.Remove(deleteItem!);
+            _databaseContext.SaveChanges();
+            return deleteItem;
         }
         public IEnumerable<OrderItem> FindAll()
         {
